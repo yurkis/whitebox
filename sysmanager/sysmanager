@@ -1,0 +1,90 @@
+#!/usr/local/bin/python3
+import sys
+import fileinput
+import os
+import subprocess
+import json
+import tempfile
+import stat
+
+from modules.comms import commands
+
+from  modules.db.db import db
+
+from modules.result import *
+from modules.session import *
+
+SID=''
+
+def parse (cmd, args):  
+  if len(args):
+      args2 = args[1:]
+  else:
+      return Error(Error.WRONG_PARAM)
+  
+  a= args[0]
+      
+  if a in cmd:
+    if "fn" in cmd[a]:
+      if "admin" in cmd[a] and cmd[a]["admin"]:
+         pass
+         #print ("Root required!")
+      return cmd[a]["fn"](args2)
+    if "subcomms" in cmd[a]:
+      return parse(cmd[a]["subcomms"], args2)
+    if "shellcmd" in cmd[a]:
+      os.system(cmd[a]["shellcmd"])
+      return Result("")
+  pass
+  return Error(Error.WRONG_PARAM)
+  pass
+
+def list_comms(prefix,cmd):
+  for key, item in cmd.items():
+    if "subcomms" in item:
+      list_comms(prefix + "." + key, item["subcomms"]);
+    if ("fn" in item) or ("shellcmd" in item):
+        print (" --", end="")
+        if ("admin" in item) and (item["admin"]):
+          print ("a", end="")
+        else:
+          print ("-", end="")
+        if ("noauth" in item) and (item["noauth"]):
+          print ("n", end="")
+        else:
+          print ("-", end="")
+        print(prefix + "." + key, end="")
+        if "shellcmd" in item:
+           print(" => " + item["shellcmd"], end="")
+        print("")
+  
+DB= db()  
+DB.open()
+s=session()
+
+args = sys.argv[1:]
+if len(args) and args[0]=="listcommands":
+  print ("flags| command   | Comments")
+  list_comms(".",commands)
+  exit(0)
+  
+if len(args) and args[0]=="-sid":
+  SID=args[1]
+  args=args[2:]
+  if s.beginSession(SID):
+    #print("good")
+    pass
+  else:
+    print(Error(Error.UNAUTORIZED).out())
+    sys.exit(1)
+
+out = parse(commands, args)
+
+if not isinstance(out, BaseResult):
+  out = Error(Error.INTERNAL_ERROR)
+
+print(out.out())
+exit_code = 0
+if not out.isSuccess(): exit_code=1
+
+sys.exit(exit_code)

@@ -1,0 +1,22 @@
+#!/bin/sh
+
+add_path() {
+    echo "${PATH}" | grep "$1" >/dev/null
+    if [ $? -eq 1 ] ; then
+    PATH="${PATH}:${1}"
+    export PATH
+    fi    
+}
+
+add_path /sbin
+add_path /bin
+add_path /usr/local/sbin
+add_path /usr/local/bin
+add_path /usr/local/bin/pwb
+
+#echo "'sys' trace: sudo sysmanager ${@} 2>&1"
+/bin/rm -rf /usr/local/www/pwb/html/*
+/bin/rm -rf /usr/bin/pwb/*
+/usr/local/bin/svn co https://xp-dev.com/svn/pwb/trunk/sysmanager/ /usr/bin/pwb/ --username wb-robot --password wbpasswd --non-interactive 2>&1  
+/usr/local/bin/svn co https://xp-dev.com/svn/pwb/trunk/html/ /usr/local/www/pwb/html --username wb-robot --password wbpasswd --non-interactive 2>&1
+#sudo sysmanager $@ 2>&1

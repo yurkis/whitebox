@@ -1,0 +1,19 @@
+#!/bin/sh
+
+add_path() {
+    echo "${PATH}" | grep "$1" >/dev/null
+    if [ $? -eq 1 ] ; then
+    PATH="${PATH}:${1}"
+    export PATH
+    fi    
+}
+
+add_path /sbin
+add_path /bin
+add_path /usr/sbin
+add_path /usr/local/sbin
+add_path /usr/local/bin
+add_path /usr/local/bin/pwb
+
+sudo /usr/local/bin/pwb/trace ${@}
+sudo sysmanager $@ 2>&1

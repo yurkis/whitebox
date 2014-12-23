@@ -1,0 +1,4 @@
+#!/bin/sh
+echo $@>>/usr/local/www/pwb/html/calltrace.txt
+#truncate -s 1k /usr/local/www/pwb/html/calltrace.txt
+#tail -n 100 /usr/local/www/pwb/html/calltrace.txt> /usr/local/www/pwb/html/calltrace.txt
