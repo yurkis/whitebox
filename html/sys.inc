@@ -11,7 +11,7 @@ protected function __clone() {
 
 }
 
-const SYS_CALL_STR = '/usr/local/bin/pwb/sys';
+const SYS_CALL_STR = '/usr/local/bin/wb/sys';
 
 static public function getInstance() {  
   static $inst = null;

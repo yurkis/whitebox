@@ -13,7 +13,7 @@ add_path /bin
 add_path /usr/sbin
 add_path /usr/local/sbin
 add_path /usr/local/bin
-add_path /usr/local/bin/pwb
+add_path /usr/local/bin/wb
 
-sudo /usr/local/bin/pwb/trace ${@}
-sudo sysmanager $@ 2>&1
+sudo /usr/local/bin/wb/trace ${@}
+sudo /usr/local/bin/wb/sysmanager $@ 2>&1
