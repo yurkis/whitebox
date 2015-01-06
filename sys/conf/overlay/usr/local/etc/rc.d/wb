@@ -76,9 +76,9 @@ wb_frontend_start()
 ##  fi
 
 conf="$required_files"
-echo   $command -c $conf -g "pid /var/run/fpw.pid;"
+echo   $command -c $conf -g "pid /var/run/wb_frontend.pid;"
 
-  $command -c $conf -g "pid /var/run/fpw.pid;"
+  $command -c $conf -g "pid /var/run/wb_frontend.pid;"
 
   # Start the dispatcher also
 #  if [ -e "cat /var/run/appcafe-dispatcher.pid" ] ; then
@@ -89,7 +89,7 @@ echo   $command -c $conf -g "pid /var/run/fpw.pid;"
 
 wb_frontend_stop()
 {
-  kill -QUIT $(cat /var/run/wd.pid)
+  kill -QUIT $(cat /var/run/wb_frontend.pid)
 #  kill -9 $(cat /var/run/appcafe-dispatcher.pid)
 }
 
