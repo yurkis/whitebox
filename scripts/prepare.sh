@@ -3,18 +3,18 @@
 echo "=============================================="
 echo "Installing packages..."
 pkg install -y nginx
+pkg install -y python3
 pkg install -y php55
 pkg install -y php55-extensions
 pkg install -y php55-json
 pkg install -y ../sys/py33-sqlite3-3.3.5_5.txz
 pkg install -y sudo
-pkg install -y python3
-#pkg install -y mc
+pkg install -y mc
 #pkg install subversion
 
 echo "============================================="
 echo " Fetching source...."
-mkdir /usr/local/www/pwb/html
+mkdir /usr/local/www/wb/
 #svn co https://xp-dev.com/svn/pwb/trunk/html/ /usr/local/www/pwb/html
 ln -s `pwd`/../html /usr/local/www/wb/
 #mkdir /usr/local/bin/pwb
