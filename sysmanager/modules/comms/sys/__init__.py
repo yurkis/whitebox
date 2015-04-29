@@ -1,6 +1,7 @@
 from . import *
 from . import sys
 from . import info
+from . import services
 
 commands={"sys":{"subcomms":
 		     {"info": {"subcomms":{
@@ -12,6 +13,11 @@ commands={"sys":{"subcomms":
 	                                   },# info subcomms
 	                      },#info
 		     "update": {"admin":True, "fn":sys.update},		     
+		     "services": {"subcomms":{
+	                                    "list":{"admin":True,"fn":services.list},
+	                                    
+	                                   },# services subcomms
+		                 },
 		     "shutdown":{"admin":True, "shellcmd":"shutdown -h now"},
 		     "reboot":{"admin":True, "shellcmd":"shutdown -r now"},
 	         }}

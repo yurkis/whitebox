@@ -20,5 +20,3 @@ def update(args):
   f.close()
   os.unlink(f.name)
 
-
-
